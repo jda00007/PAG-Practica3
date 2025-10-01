@@ -1,0 +1,3 @@
+C:/Users/programas/Desktop/pag2/cmake-build-debug/CMakeFiles/pag2.dir
+C:/Users/programas/Desktop/pag2/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/programas/Desktop/pag2/cmake-build-debug/CMakeFiles/rebuild_cache.dir

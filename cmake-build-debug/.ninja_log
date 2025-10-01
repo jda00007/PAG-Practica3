@@ -1,0 +1,15 @@
+# ninja log v5
+9	1499	7810546705949774	CMakeFiles/pag2.dir/main.cpp.obj	fcda7b35dd5d1f1d
+1500	2771	7810546718561944	pag2.exe	b40dc8f2b28d363c
+35	3691	7804153145401203	CMakeFiles/pag2.dir/glad/src/glad.c.obj	7bfa581107cbde80
+13	1483	7810545618191005	CMakeFiles/pag2.dir/Renderer.cpp.obj	3dfc38dc418f36da
+91	2581	7804354911956504	CMakeFiles/pag2.dir/imgui/src/imgui_impl_opengl3.cpp.obj	51ff76c81ba8be48
+9	4336	7810547014583653	build.ninja	e326d6d89d24e9ff
+40	3162	7804354917701842	CMakeFiles/pag2.dir/imgui/src/imgui_demo.cpp.obj	4c0f8cf4e7bc57df
+53	3517	7804354921312823	CMakeFiles/pag2.dir/imgui/src/imgui_tables.cpp.obj	42433b178c18b9d5
+77	3694	7804354923073265	CMakeFiles/pag2.dir/imgui/src/imgui_impl_glfw.cpp.obj	bcc5961e3ae0812e
+10	5094	7804354937055571	CMakeFiles/pag2.dir/imgui/src/imgui_draw.cpp.obj	be3505eb6e7de89e
+65	5389	7804354939811110	CMakeFiles/pag2.dir/imgui/src/imgui_widgets.cpp.obj	ac4b2bbda850001
+25	7158	7804354957620213	CMakeFiles/pag2.dir/imgui/src/imgui.cpp.obj	42bc3584c04a62b7
+12	1411	7810547070314574	CMakeFiles/pag2.dir/main.cpp.obj	fcda7b35dd5d1f1d
+1412	2691	7810547083022744	pag2.exe	b40dc8f2b28d363c
