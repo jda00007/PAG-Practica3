@@ -56,6 +56,13 @@ build CMakeFiles/pag2.dir/Renderer.cpp.obj: CXX_COMPILER__pag2_unscanned_Debug C
   OBJECT_DIR = CMakeFiles\pag2.dir
   OBJECT_FILE_DIR = CMakeFiles\pag2.dir
 
+build CMakeFiles/pag2.dir/Shader.cpp.obj: CXX_COMPILER__pag2_unscanned_Debug C$:/Users/programas/Desktop/pag2/Shader.cpp || cmake_object_order_depends_target_pag2
+  DEP_FILE = CMakeFiles\pag2.dir\Shader.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  INCLUDES = -IC:/Users/programas/Desktop/pag2/GLAD/include -IC:/Users/programas/Desktop/pag2/imgui/include -isystem C:/Users/programas/.conan2/p/openg599e77efdc939/p/include -isystem C:/Users/programas/.conan2/p/khrpl54278e0c9b4ae/p/include -isystem C:/Users/programas/.conan2/p/b/glfwb008171b78f7d/p/include
+  OBJECT_DIR = CMakeFiles\pag2.dir
+  OBJECT_FILE_DIR = CMakeFiles\pag2.dir
+
 build CMakeFiles/pag2.dir/main.cpp.obj: CXX_COMPILER__pag2_unscanned_Debug C$:/Users/programas/Desktop/pag2/main.cpp || cmake_object_order_depends_target_pag2
   DEP_FILE = CMakeFiles\pag2.dir\main.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always
@@ -105,6 +112,13 @@ build CMakeFiles/pag2.dir/imgui/src/imgui_impl_opengl3.cpp.obj: CXX_COMPILER__pa
   OBJECT_DIR = CMakeFiles\pag2.dir
   OBJECT_FILE_DIR = CMakeFiles\pag2.dir\imgui\src
 
+build CMakeFiles/pag2.dir/imgui/src/imgui_stdlib.cpp.obj: CXX_COMPILER__pag2_unscanned_Debug C$:/Users/programas/Desktop/pag2/imgui/src/imgui_stdlib.cpp || cmake_object_order_depends_target_pag2
+  DEP_FILE = CMakeFiles\pag2.dir\imgui\src\imgui_stdlib.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  INCLUDES = -IC:/Users/programas/Desktop/pag2/GLAD/include -IC:/Users/programas/Desktop/pag2/imgui/include -isystem C:/Users/programas/.conan2/p/openg599e77efdc939/p/include -isystem C:/Users/programas/.conan2/p/khrpl54278e0c9b4ae/p/include -isystem C:/Users/programas/.conan2/p/b/glfwb008171b78f7d/p/include
+  OBJECT_DIR = CMakeFiles\pag2.dir
+  OBJECT_FILE_DIR = CMakeFiles\pag2.dir\imgui\src
+
 build CMakeFiles/pag2.dir/imgui/src/imgui_tables.cpp.obj: CXX_COMPILER__pag2_unscanned_Debug C$:/Users/programas/Desktop/pag2/imgui/src/imgui_tables.cpp || cmake_object_order_depends_target_pag2
   DEP_FILE = CMakeFiles\pag2.dir\imgui\src\imgui_tables.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always
@@ -127,7 +141,7 @@ build CMakeFiles/pag2.dir/imgui/src/imgui_widgets.cpp.obj: CXX_COMPILER__pag2_un
 #############################################
 # Link the executable pag2.exe
 
-build pag2.exe: CXX_EXECUTABLE_LINKER__pag2_Debug CMakeFiles/pag2.dir/Renderer.cpp.obj CMakeFiles/pag2.dir/main.cpp.obj CMakeFiles/pag2.dir/glad/src/glad.c.obj CMakeFiles/pag2.dir/imgui/src/imgui.cpp.obj CMakeFiles/pag2.dir/imgui/src/imgui_demo.cpp.obj CMakeFiles/pag2.dir/imgui/src/imgui_draw.cpp.obj CMakeFiles/pag2.dir/imgui/src/imgui_impl_glfw.cpp.obj CMakeFiles/pag2.dir/imgui/src/imgui_impl_opengl3.cpp.obj CMakeFiles/pag2.dir/imgui/src/imgui_tables.cpp.obj CMakeFiles/pag2.dir/imgui/src/imgui_widgets.cpp.obj | C$:/Users/programas/.conan2/p/b/glfwb008171b78f7d/p/lib/libglfw3.a
+build pag2.exe: CXX_EXECUTABLE_LINKER__pag2_Debug CMakeFiles/pag2.dir/Renderer.cpp.obj CMakeFiles/pag2.dir/Shader.cpp.obj CMakeFiles/pag2.dir/main.cpp.obj CMakeFiles/pag2.dir/glad/src/glad.c.obj CMakeFiles/pag2.dir/imgui/src/imgui.cpp.obj CMakeFiles/pag2.dir/imgui/src/imgui_demo.cpp.obj CMakeFiles/pag2.dir/imgui/src/imgui_draw.cpp.obj CMakeFiles/pag2.dir/imgui/src/imgui_impl_glfw.cpp.obj CMakeFiles/pag2.dir/imgui/src/imgui_impl_opengl3.cpp.obj CMakeFiles/pag2.dir/imgui/src/imgui_stdlib.cpp.obj CMakeFiles/pag2.dir/imgui/src/imgui_tables.cpp.obj CMakeFiles/pag2.dir/imgui/src/imgui_widgets.cpp.obj | C$:/Users/programas/.conan2/p/b/glfwb008171b78f7d/p/lib/libglfw3.a
   FLAGS = -g
   LINK_LIBRARIES = C:/Users/programas/.conan2/p/b/glfwb008171b78f7d/p/lib/libglfw3.a  -lopengl32  -lgdi32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   LINK_PATH = -LC:/Users/programas/.conan2/p/b/glfwb008171b78f7d/p/lib

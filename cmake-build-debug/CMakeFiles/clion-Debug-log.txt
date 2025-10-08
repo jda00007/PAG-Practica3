@@ -101,6 +101,6 @@ Install finished successfully
 -- Conan: Target declared 'khrplatform::khrplatform'
 -- CMake-Conan: find_package(glfw3) found, 'conan install' already ran
 -- Conan: Target declared 'glfw'
--- Configuring done (3.4s)
+-- Configuring done (3.7s)
 -- Generating done (0.0s)
 -- Build files have been written to: C:/Users/programas/Desktop/pag2/cmake-build-debug

@@ -9,6 +9,8 @@
 #include <imgui_impl_opengl3.h>
 #include <deque>
 #include <string>
+#include "Shader.h"
+#include <imgui_stdlib.h>
 
 float colorfondo[4]={0.6,0.6,0.6,1};
 std::deque<std::string> mensajesporventana;
@@ -35,7 +37,7 @@ void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods){
 
 
 void callbackRefrescoVentana(GLFWwindow* ventana){
-    PAG::Renderer::getInstancia().refrescar();
+    Shader::getInstancia().refrescar();
     glfwSwapBuffers(ventana);
     //std::cout << "Finaliza el callback de refresco" << std::endl;
     aniadirmensajesporventana("Finaliza el callback de refresco");
@@ -98,9 +100,9 @@ void scroll_callback ( GLFWwindow *window, double xoffset, double yoffset )
              //<< " Unidades en horizontal y " << yoffset
              //<< " unidades en vertical" << std::endl;
 
-    aniadirmensajesporventana("Movida la rueda del ratón " + std::to_string(xoffset)
-                                + "Unidades en horizontal y " + std::to_string(yoffset) + "unidades en vertical"
-                                );
+    //aniadirmensajesporventana("Movida la rueda del ratón " + std::to_string(xoffset)
+      //                          + "Unidades en horizontal y " + std::to_string(yoffset) + "unidades en vertical"
+         //                       );
 
     float delta=(float)yoffset*0.02;
     for (int i = 0; i < 3; ++i) {
@@ -113,6 +115,8 @@ void scroll_callback ( GLFWwindow *window, double xoffset, double yoffset )
         }
 
     }
+    //agragado para cambiar el color cuando se use la rueda del raton
+    PAG::Renderer::getInstancia().colorfondo(colorfondo[0],colorfondo[1],colorfondo[2]);
 }
 
 int main()
@@ -211,14 +215,14 @@ int main()
 
 
 // se supone que va aqui
-try{
-    PAG::Renderer::getInstancia().creaShaderProgram();
+/*try{
+    Shader::getInstancia().creaShaderProgram();
 }catch (const std::exception& e){
     aniadirmensajesporventana(e.what());
 }
-
-    PAG::Renderer::getInstancia().creaModelo();
-
+*//*
+    Shader::getInstancia().creaModelo();
+*/
 
 
 
@@ -268,19 +272,49 @@ try{
             //La ventana está despegada
             ImGui::SetWindowFontScale(1.0f); //Escalamos el texto si fuera necesario
             //Pintamos los controles
+            if(ImGui::ColorPicker4("color de fondo", (float*)colorfondo,ImGuiColorEditFlags_PickerHueWheel)){
+                PAG::Renderer::getInstancia().colorfondo(colorfondo[0],colorfondo[1],colorfondo[2]);
+            }
 
-            ImGui::ColorPicker4("color de fondo", (float*)colorfondo,ImGuiColorEditFlags_PickerHueWheel);
 
             //si la ventana no esta desplegada devuelve false
             ImGui::End();
         }
-        //Aqui ve el dibujado de la escena con instrucciones OpenGL
 
-        PAG::Renderer::getInstancia().refrescar();
+
+        static std::string _name="";
+        ImGui::SetNextWindowPos ( ImVec2 (500, 100), ImGuiCond_Once );
+        if(ImGui::Begin("Shader Program"))
+        {
+            //La ventana está despegada
+            ImGui::SetWindowFontScale(1.0f); //Escalamos el texto si fuera necesario
+            //Pintamos los controles
+            ImGui::InputText("##",&_name,ImGuiInputTextFlags_AutoSelectAll);
+
+
+            bool _buttonPressed = ImGui::Button("Load");
+
+            if (_buttonPressed && !_name.empty()){
+                try{
+
+                    Shader::getInstancia().creaShaderProgram(_name);
+                    Shader::getInstancia().creaModelo();
+                }catch (const std::exception& e){
+                    aniadirmensajesporventana(e.what());
+                }
+            }
+
+            //si la ventana no esta desplegada devuelve false
+            ImGui::End();
+        }
+
+
+
+        Shader::getInstancia().refrescar();
 
         ImGui::Render();
-        PAG::Renderer::getInstancia().colorfondo(colorfondo[0],colorfondo[1],colorfondo[2]);
-        PAG::Renderer::getInstancia().refrescar();
+        //PAG::Renderer::getInstancia().colorfondo(colorfondo[0],colorfondo[1],colorfondo[2]);
+        //PAG::Renderer::getInstancia().refrescar();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 
@@ -310,7 +344,7 @@ try{
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
-    glfwDestroyWindow(window);
+    //glfwDestroyWindow(window);
 
     glfwDestroyWindow ( window ); // - Cerramos y destruimos la ventana de la aplicación.
     window = nullptr;

@@ -13,7 +13,9 @@ add_executable(${PROJECT_NAME} ${MY_FILES} ${GLAD_FILES} ${IMGUI_FILES}..
         Renderer.h
         Listener.h
         Listener.h
-       )
+        Shader.cpp
+        Shader.h
+)
 
 target_include_directories(${PROJECT_NAME} PUBLIC GLAD/include imgui/include)
 
