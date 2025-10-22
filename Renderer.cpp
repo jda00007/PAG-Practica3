@@ -14,12 +14,13 @@
 
 namespace PAG {
     Renderer* Renderer::instancia=nullptr;
+
     Renderer::Renderer() {
 
     }
 
     Renderer::~Renderer() {
-/*
+
         if ( idVS!=0){
             glDeleteShader (idVS);
         }
@@ -43,7 +44,7 @@ namespace PAG {
         if (idVAO!=0){
             glDeleteVertexArrays (1,&idVAO);
         }
-        */
+
     }
 
     void PAG::Renderer::inicializaOpenGL() {
@@ -58,16 +59,26 @@ namespace PAG {
         }
         return *instancia;
     }
+
+
 //modificado para que incluir el shader
- /*   void Renderer::refrescar() {
+    void Renderer::refrescar() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+
+        //todo: no se muy bien porque se desforma el triangulo
+        glm::mat4 view = camara.getViewMatrix();
+        glm::mat4 projection = glm::perspective(glm::radians(50.0f), 1024.0f/576.0f, 1.0f, 10.0f);
+
+        glUniformMatrix4fv(glGetUniformLocation(idSP, "view"), 1, GL_FALSE, &view[0][0]);
+        glUniformMatrix4fv(glGetUniformLocation(idSP, "projection"), 1, GL_FALSE, &projection[0][0]);
+
         glUseProgram ( idSP );
         glBindVertexArray ( idVAO );
         glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER, idIBO );
         glDrawElements( GL_TRIANGLES, 3 , GL_UNSIGNED_INT, nullptr );
 
-    }*/
+    }
 
   /*  void Renderer::wakeUp(WindowType t, ... ){
         switch (t) {
@@ -100,8 +111,8 @@ namespace PAG {
    * Método para crear, compilar y enlazar el shader program
    * @note No se incluye ninguna comprobación de errores
    */
-  /*
-  void PAG::Renderer::creaShaderProgram() {
+
+  void PAG::Renderer::creaShaderProgram(const std::string& nombre) {
       /*std::string miVertexShader =
               "#version 410\n"
               "layout (location = 0) in vec posicion;\n"
@@ -117,6 +128,9 @@ namespace PAG {
               "{ colorFragmento = vec4 (1.0,0.4,0.2,1.0);\n"
               "}\n";
 */
+      //llamo al crea shader de Shader.h
+      Shader::creaShaderProgram(nombre,idVS,idFS,idSP);
+
       /*
       //Creacion del shader program
       idSP= glCreateProgram();
@@ -246,8 +260,8 @@ namespace PAG {
               throw std::runtime_error(mensaje);
           }
       }
-*/
-      /*
+
+
       idVS = glCreateShader ( GL_VERTEX_SHADER );
       const GLchar* fuenteVS = miVertexShader.c_str();
       glShaderSource (idVS,1,&fuenteVS, nullptr);
@@ -257,10 +271,10 @@ namespace PAG {
       glAttachShader (idSP, idVS);
       glAttachShader (idSP, idFS);
       glLinkProgram ( idSP);
-*/
-//  }
 
-/*
+*/  }
+
+
   void PAG::Renderer::creaModelo() {
       GLfloat vertices[] = { -0.5,-0.5, 0,
                              0.5,-0.5,0,
@@ -276,7 +290,7 @@ namespace PAG {
       glGenBuffers (1,&idIBO);
       glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER,idIBO);
       glBufferData ( GL_ELEMENT_ARRAY_BUFFER,3*sizeof(GLuint),indices, GL_STATIC_DRAW);
-  }*/
+  }
 
   std::string PAG::Renderer::informeopenGL() {
 
@@ -289,9 +303,33 @@ namespace PAG {
       aux = oss.str();
       return aux;
   }
-void PAG::Renderer::llamadaviewport(int width, int height) {
-    glViewport ( 0, 0, width, height );
+  void PAG::Renderer::llamadaviewport(int width, int height) {
+      glViewport ( 0, 0, width, height );
   }
 
+  void PAG::Renderer::setMovimientoCamara(PAG::Movimiento_Camara movimiento) {
+      movimientoCamara=movimiento;
+  }
+  void PAG::Renderer::movimientoraton(float deltaX, float deltaY) {
+
+      printf("Movimiento" );
+      switch (movimientoCamara) {
+          case PAG::Movimiento_Camara::orbit:
+              camara.orbit(deltaX * 0.01f, deltaY * 0.01f);
+              break;
+          case PAG::Movimiento_Camara::pan:
+              camara.pan(deltaX * 0.01f, deltaY * 0.01f);
+              break;
+          case PAG::Movimiento_Camara::dolly:
+              camara.dolly(deltaY * 0.05f);
+              break;
+          default:
+              break;
+      }
+  }
+
+  glm::mat4 PAG::Renderer::getViewMatrix() const {
+      return camara.getViewMatrix();
+  }
 
 } // PAG

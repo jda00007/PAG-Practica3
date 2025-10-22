@@ -260,6 +260,9 @@ _cmake_program:FILEPATH=C:/Program Files/CMake/bin/cmake.exe
 //The directory containing a CMake configuration file for glfw3.
 glfw3_DIR:PATH=C:/Users/programas/Desktop/pag2/cmake-build-debug/conan/build/Debug/generators
 
+//The directory containing a CMake configuration file for glm.
+glm_DIR:PATH=C:/Users/programas/Desktop/pag2/cmake-build-debug/conan/build/Debug/generators
+
 //The directory containing a CMake configuration file for khrplatform.
 khrplatform_DIR:PATH=C:/Users/programas/Desktop/pag2/cmake-build-debug/conan/build/Debug/generators
 

@@ -8,23 +8,19 @@
 #include "glad/glad.h"
 
 class Shader {
-    static Shader* instancia;
-    Shader();
-    GLuint idVS = 0; // Identificador del vertex shader
-    GLuint idFS = 0; // Identificador del fragment shader
-    GLuint idSP = 0; // Identificador del shader program
-    GLuint idVAO = 0; // Identificador del vertex array object
-    GLuint idVBO = 0; // Identificador del vertex buffer object
-    GLuint idIBO = 0; // Identificador del index buffer object
+
+
 
 public:
     virtual ~Shader();
-    static Shader& getInstancia();
 
-    void creaShaderProgram(const std::string& nombre);
-    void creaModelo();
 
-    void refrescar();
+    static void creaShaderProgram(const std::string& nombre, GLuint& idVS, GLuint& idFS, GLuint& idSP);
+    //void creaModelo();
+
+    //void refrescar();
+
+
 };
 
 

@@ -14,6 +14,10 @@
 
 float colorfondo[4]={0.6,0.6,0.6,1};
 std::deque<std::string> mensajesporventana;
+bool raton = false;
+double posicion_raton_anterior_X=0;
+double posicion_raton_anterior_Y=0;
+PAG::Movimiento_Camara movimiento_seleccionado= PAG::Movimiento_Camara::orbit;
 
 //Funcion para agregar los mensajes a la estructura
 void aniadirmensajesporventana(const std::string& mensaje){
@@ -22,6 +26,7 @@ void aniadirmensajesporventana(const std::string& mensaje){
 
 
 void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods){
+    /*
     if (action == GLFW_PRESS){
         //Si es necesario hacer algo con este evento, indicarlo aqui
         //Finalmente, comunica el evente de ratón a ImGui
@@ -33,11 +38,31 @@ void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods){
         ImGuiIO& io = ImGui::GetIO();
         io.AddMouseButtonEvent(button,false);
     }
+     */
+
+    if (button == GLFW_MOUSE_BUTTON_LEFT){
+     if (action == GLFW_PRESS){
+         double x_posicion, y_posicion;
+         glfwGetCursorPos(window,&x_posicion,&y_posicion);
+         posicion_raton_anterior_X= x_posicion;
+         posicion_raton_anterior_Y= y_posicion;
+         raton=true;
+         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+     }   else {
+         if (action == GLFW_RELEASE){
+             raton = false;
+             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+         }
+     }
+    }
+
+    ImGuiIO& io = ImGui::GetIO();
+    io.AddMouseButtonEvent(button,action == GLFW_PRESS);
 }
 
 
 void callbackRefrescoVentana(GLFWwindow* ventana){
-    Shader::getInstancia().refrescar();
+    PAG::Renderer::getInstancia().refrescar();
     glfwSwapBuffers(ventana);
     //std::cout << "Finaliza el callback de refresco" << std::endl;
     aniadirmensajesporventana("Finaliza el callback de refresco");
@@ -82,7 +107,7 @@ void key_callback ( GLFWwindow *window, int key, int scancode, int action, int m
 
 // - Esta función callback será llamada cada vez que se pulse algún botón
 // del ratón sobre el área de dibujo OpenGL.
-void mouse_button_callback ( GLFWwindow *window, int button, int action, int mods )
+/*void mouse_button_callback ( GLFWwindow *window, int button, int action, int mods )
 {  if ( action == GLFW_PRESS )
     {  //std::cout << "Pulsado el botón: " << button << std::endl;
         aniadirmensajesporventana("Pulsado el botón: " + std::to_string(button));
@@ -91,7 +116,7 @@ void mouse_button_callback ( GLFWwindow *window, int button, int action, int mod
     {  //std::cout << "Soltado el botón: " << button << std::endl;
         aniadirmensajesporventana("Soltado el botón: " + std::to_string(button));
     }
-}
+}*/
 
 // - Esta función callback será llamada cada vez que se mueva la rueda
 // del ratón sobre el área de dibujo OpenGL.
@@ -117,6 +142,22 @@ void scroll_callback ( GLFWwindow *window, double xoffset, double yoffset )
     }
     //agragado para cambiar el color cuando se use la rueda del raton
     PAG::Renderer::getInstancia().colorfondo(colorfondo[0],colorfondo[1],colorfondo[2]);
+}
+
+void posicion_cursor_callback(GLFWwindow* window, double x_posicion, double y_posicion){
+    if (raton){
+        //aniadirmensajesporventana("raton moviendose");
+        float deltaX = (float)(x_posicion - posicion_raton_anterior_X);
+        float deltaY = (float) (y_posicion - posicion_raton_anterior_Y);
+
+        PAG::Renderer::getInstancia().movimientoraton(deltaX,deltaY);
+
+        posicion_raton_anterior_X= x_posicion;
+        posicion_raton_anterior_Y= y_posicion;
+
+        ImGuiIO& io = ImGui::GetIO();
+        io.AddMousePosEvent((float)x_posicion,(float) y_posicion);
+    }
 }
 
 int main()
@@ -174,8 +215,12 @@ int main()
     glfwSetWindowRefreshCallback ( window, callbackRefrescoVentana );
     glfwSetFramebufferSizeCallback ( window, framebuffer_size_callback );
     glfwSetKeyCallback ( window, key_callback );
-    glfwSetMouseButtonCallback ( window, mouse_button_callback );
+    glfwSetMouseButtonCallback ( window, mouseButtonCallback );
     glfwSetScrollCallback ( window, scroll_callback );
+    //añadida
+    glfwSetCursorPosCallback(window, posicion_cursor_callback);
+
+
 
 
 /*
@@ -297,8 +342,8 @@ int main()
             if (_buttonPressed && !_name.empty()){
                 try{
 
-                    Shader::getInstancia().creaShaderProgram(_name);
-                    Shader::getInstancia().creaModelo();
+                    PAG::Renderer::getInstancia().creaShaderProgram(_name);
+                    PAG::Renderer::getInstancia().creaModelo();
                 }catch (const std::exception& e){
                     aniadirmensajesporventana(e.what());
                 }
@@ -308,9 +353,25 @@ int main()
             ImGui::End();
         }
 
+// no se como poner para que no afecte el movimiento del raton cuando se mueve el en otro menu
+        ImGui::SetNextWindowPos(ImVec2(700, 200), ImGuiCond_Once);
+        if (ImGui::Begin("Camara")){
+            const char* vector_movimientos[] = {"orbit", "pan" , "dolly"};
+            static int movimiento_seleccionado_vector = 0;
+            if (ImGui::Combo("Movement",&movimiento_seleccionado_vector,vector_movimientos,3)){
+                auto movimiento = static_cast<PAG::Movimiento_Camara>(movimiento_seleccionado_vector);
+                aniadirmensajesporventana(vector_movimientos[movimiento_seleccionado_vector]);
+                PAG::Renderer::getInstancia().setMovimientoCamara(movimiento);
+            }
+            if (ImGui::Button("Reseteo Camara")){
+                PAG::Renderer::getInstancia().reseteo_camara();
+            }
+            ImGui::End();
+        }
 
 
-        Shader::getInstancia().refrescar();
+
+        PAG::Renderer::getInstancia().refrescar();
 
         ImGui::Render();
         //PAG::Renderer::getInstancia().colorfondo(colorfondo[0],colorfondo[1],colorfondo[2]);
@@ -351,3 +412,15 @@ int main()
     glfwTerminate (); // - Liberamos los recursos que ocupaba GLFW.
 
 }
+
+
+
+//cosas extras
+//Redimensionar la ventana al tamaño de los controles que contiene
+//if(ImGui::Begin(getTitle().c_str(),nullptr,ImGuioWindowFlags_AlwaysAutoResize))
+//Cambiar la escala del texto (1.0 es sin escalar)
+//ImGui::SetWindowsFrontScale(_MYGUI_TEXT_SCALE_);
+//Combo sencillo con un vector con char o a pelo
+//if(_changedM == ImGui::Combo("##MovType",(int*)&_active,"None\0Zoom\0Crane\0Dolly\0Pan\0Tilt\0Orbit\0\0"))
+//switch (_active)
+  //      {case Movement::Zoom:}

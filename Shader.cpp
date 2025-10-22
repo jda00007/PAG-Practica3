@@ -7,44 +7,14 @@
 #include <fstream>
 #include "Shader.h"
 
-Shader* Shader::instancia= nullptr;
-Shader::Shader(){
 
-}
+
 
 Shader::~Shader(){
-    if ( idVS!=0){
-        glDeleteShader (idVS);
-    }
 
-    if (idFS!=0){
-        glDeleteShader (idFS);
-    }
-
-    if (idSP!=0){
-        glDeleteProgram (idSP);
-    }
-
-    if (idVBO!=0){
-        glDeleteBuffers (1,&idVBO);
-    }
-
-    if (idIBO!=0){
-        glDeleteBuffers (1,&idIBO);
-    }
-
-    if (idVAO!=0){
-        glDeleteVertexArrays (1,&idVAO);
-    }
-}
-Shader& Shader::getInstancia() {
-    if(!instancia){
-        instancia=new Shader;
-    }
-    return *instancia;
 }
 
-void Shader::creaShaderProgram(const std::string& nombre) {
+void Shader::creaShaderProgram(const std::string& nombre,GLuint& idVS,GLuint& idFS, GLuint& idSP) {
     /*std::string miVertexShader =
               "#version 410\n"
               "layout (location = 0) in vec posicion;\n"
@@ -206,7 +176,7 @@ void Shader::creaShaderProgram(const std::string& nombre) {
     glLinkProgram ( idSP);
 */
 }
-
+/*
 void Shader::creaModelo() {
     GLfloat vertices[] = { -0.5,-0.5, 0,
                            0.5,-0.5,0,
@@ -223,7 +193,8 @@ void Shader::creaModelo() {
     glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER,idIBO);
     glBufferData ( GL_ELEMENT_ARRAY_BUFFER,3*sizeof(GLuint),indices, GL_STATIC_DRAW);
 }
-
+*/
+/*
 void Shader::refrescar() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
@@ -232,4 +203,4 @@ void Shader::refrescar() {
     glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER, idIBO );
     glDrawElements( GL_TRIANGLES, 3 , GL_UNSIGNED_INT, nullptr );
 
-}
+}*/

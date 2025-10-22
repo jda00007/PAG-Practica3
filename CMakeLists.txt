@@ -15,6 +15,8 @@ add_executable(${PROJECT_NAME} ${MY_FILES} ${GLAD_FILES} ${IMGUI_FILES}..
         Listener.h
         Shader.cpp
         Shader.h
+        camara.cpp
+        camara.h
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC GLAD/include imgui/include)
@@ -23,8 +25,10 @@ target_include_directories(${PROJECT_NAME} PUBLIC GLAD/include imgui/include)
 find_package(opengl_system)
 find_package(opengl-registry)
 find_package(glfw3)
+find_package(glm)
 
 
 target_link_libraries(${PROJECT_NAME} opengl::opengl)
 target_link_libraries(${PROJECT_NAME} opengl-registry::opengl-registry)
 target_link_libraries(${PROJECT_NAME} glfw)
+target_link_libraries(${PROJECT_NAME} glm::glm)
